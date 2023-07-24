@@ -8,6 +8,15 @@ import share from "../assets/icons/share.png";
 import location from "../assets/icons/location.png";
 import chevronLeft from '../assets/icons/chevron-left.png'
 import chevronRight from '../assets/icons/chevron-right.png'
+import backArrow from '../assets/icons/back-arrow.png'
+import ellipsis from '../assets/icons/ellipsis.png'
+import profile from '../assets/icons/profile.webp'
+import plus from '../assets/icons/plus.png'
+import home from '../assets/icons/home.png'
+import settings from '../assets/icons/settings.png'
+import calender from '../assets/icons/calender.png'
+import workout from '../assets/icons/workout.png'
+
 
 export default {
   heart,
@@ -19,5 +28,13 @@ export default {
   share,
   location,
   chevronLeft,
-  chevronRight
+  chevronRight,
+  backArrow,
+  ellipsis,
+  profile,
+  plus,
+  home,
+  settings,
+  calender,
+  workout,
 };

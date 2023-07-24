@@ -3,7 +3,7 @@ import { Button, SafeAreaView, ScrollView, View, Text, Image } from "react-nativ
 import { Stack, useRouter } from "expo-router";
 
 import { COLORS, icons, images, SIZES } from "../constants";
-// import {ScreenHeaderBtn} from "../components";
+import FooterButton from "../components/FooterButton";
 
 const Test = () => {
   const router = useRouter()
@@ -24,7 +24,11 @@ const Test = () => {
           ),
           headerRight: () => (
             // <ScreenHeaderBtn iconUrl={images.profile} dimension='100%' />
-            <Button title=">"/>
+            <Button 
+              title=">"
+              onPress={() => {
+                router.push('/viewWorkout')
+              }}/>
           ),
           headerTitle: "Test",
         }}
@@ -32,7 +36,9 @@ const Test = () => {
 
       <ScrollView showsVerticalScrollIndicator={true}>
         <Text>This is the test page</Text>
-		<Image source={images.profile}/>
+        <FooterButton 
+          iconUrl={icons.home} 
+          dimension={40}/>
       </ScrollView>
     </SafeAreaView>
   );

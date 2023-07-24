@@ -1,5 +1,7 @@
-import profile from "../assets/images/kemal.jpg";
+import defaultImage from "../assets/images/default-image.png";
+// import defaultImage from "../assets/images/default-placeholder.jpg";
 
 export default {
-  profile,
+  defaultImage,
+  // defaultImage,
 };
