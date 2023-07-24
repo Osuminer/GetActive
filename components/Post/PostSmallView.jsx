@@ -1,10 +1,18 @@
 import { Image, TouchableOpacity, Text, Button, StyleSheet, View } from "react-native";
 import { COLORS, icons, images, SIZES } from "../../constants";
 
+import { Stack, useRouter } from "expo-router";
+
 const PostSmallView = ({ post }) => {
-  return (
+	const router = useRouter()
+	
+	return (
     <View style={styles.postView}>
-		<TouchableOpacity>
+		<TouchableOpacity
+			onPress={() => {
+				router.push({pathname: "/viewPost", 
+							 params: {post: JSON.stringify(post)}})
+			}}>
 			<Text style={styles.postTitle}>{post.title}</Text>
 			<Text style={styles.postText}>{post.description}</Text>
 		</TouchableOpacity>
