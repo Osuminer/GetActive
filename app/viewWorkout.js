@@ -1,13 +1,15 @@
-import { useState } from "react";
 import { Button, SafeAreaView, ScrollView, View, Text, Image, TextInput, StyleSheet } from "react-native";
-import { Stack, useRouter } from "expo-router";
+import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 
 import { COLORS, icons, images, SIZES } from "../constants";
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn/ScreenHeaderBtn";
 import WorkoutImage from "../components/WorkoutImage/WorkoutImage";
+import ExerciseElement from "../components/Workout/ExerciseElement";
 
 const ViewWorkout = () => {
   const router = useRouter()
+  const params = useLocalSearchParams()
+  const workout = JSON.parse(params.workout)
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -20,7 +22,7 @@ const ViewWorkout = () => {
               iconUrl={icons.backArrow} 
               dimension='60%' 
               handlePress={() => {
-              	router.push("/home")
+              	router.push("/workouts")
                 }}/>
           ),
           headerRight: () => (
@@ -31,7 +33,7 @@ const ViewWorkout = () => {
       />
 
       <View style={styles.view}>
-        <Text style={styles.titleText}>Workout Title</Text>
+        <Text style={styles.titleText}>{workout.title}</Text>
 
         <WorkoutImage iconUrl={images.defaultImage} dimension='100%'/>
 
@@ -40,22 +42,11 @@ const ViewWorkout = () => {
             justifyContent: "center",
             alignItems: "center",
             }}>
-          <Text style={styles.exerciseText}>Bench Press - 4x10</Text>
-          <View style={styles.lineStyle} />
-          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
-          <View style={styles.lineStyle} />
-          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
-          <View style={styles.lineStyle} />
-          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
-          <View style={styles.lineStyle} />
-          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
-          <View style={styles.lineStyle} />
-          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
-          <View style={styles.lineStyle} />
-          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
-          <View style={styles.lineStyle} />
-          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
-          <View style={styles.lineStyle} />
+          
+          {workout.exercises.map((exercise) => {
+            return (<ExerciseElement exercise={exercise} />)
+          })}
+
         </ScrollView>
       </View>
     </SafeAreaView>

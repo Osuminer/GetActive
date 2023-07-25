@@ -46,10 +46,10 @@ const Workouts = () => {
           headerShadowVisible: false,
           headerLeft: () => (
             <ScreenHeaderBtn
-              iconUrl={icons.profile}
+              iconUrl={icons.backArrow}
               dimension="70%"
               handlePress={() => {
-                router.push("/test");
+                router.push("/home");
               }}
             />
           ),
@@ -57,9 +57,6 @@ const Workouts = () => {
             <ScreenHeaderBtn
               iconUrl={icons.ellipsis}
               dimension="70%"
-              handlePress={() => {
-                router.push("");
-              }}
             />
           ),
           headerTitle: "",

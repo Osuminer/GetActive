@@ -69,7 +69,7 @@ const Home = () => {
         {/* Feed Scroll */}
         <ScrollView style={styles.scroll}>
           {feed.map((post) => {
-              return (<PostSmallView post={post} />)
+            return (<PostSmallView post={post} />)
           })}
         </ScrollView>
       </View>

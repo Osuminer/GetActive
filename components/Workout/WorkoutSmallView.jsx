@@ -11,7 +11,7 @@ const WorkoutSmallView = ({ workout }) => {
       <TouchableOpacity
         onPress={() => {
           router.push({pathname: "/viewWorkout", 
-                params: {post: JSON.stringify(workout)}})
+                params: {workout: JSON.stringify(workout)}})
         }}>
         <Image 
           style={styles.image}
