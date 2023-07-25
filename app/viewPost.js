@@ -1,15 +1,16 @@
+import { useState } from "react";
 import { Button, SafeAreaView, ScrollView, View, Text, Image, TextInput, StyleSheet } from "react-native";
 import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 
 import { COLORS, icons, images, SIZES } from "../constants";
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn/ScreenHeaderBtn";
 import WorkoutImage from "../components/WorkoutImage/WorkoutImage";
-import ExerciseElement from "../components/Workout/ExerciseElement";
 
-const ViewWorkout = () => {
+
+const ViewPost = () => {
   const router = useRouter()
   const params = useLocalSearchParams()
-  const workout = JSON.parse(params.workout)
+  const post = JSON.parse(params.post)
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -22,7 +23,7 @@ const ViewWorkout = () => {
               iconUrl={icons.backArrow} 
               dimension='60%' 
               handlePress={() => {
-              	router.push("/workouts")
+              	router.push("/home")
                 }}/>
           ),
           headerRight: () => (
@@ -33,20 +34,37 @@ const ViewWorkout = () => {
       />
 
       <View style={styles.view}>
-        <Text style={styles.titleText}>{workout.title}</Text>
+        <Text style={styles.titleText}>{post.title}</Text>
 
-        <WorkoutImage iconUrl={images.defaultImage} dimension='100%'/>
+        <WorkoutImage iconUrl={images.defaultImage} dimension='80%'/>
 
+        <Text style={styles.subTitleText}>Description:</Text>
+        <ScrollView style={styles.scroll}>
+          <Text>{post.description}</Text>
+        </ScrollView>
+
+        <Text style={styles.subTitleText}>Workout:</Text>
         <ScrollView style={styles.scroll}
           contentContainerStyle={{
             justifyContent: "center",
             alignItems: "center",
             }}>
-          
-          {workout.exercises.map((exercise) => {
-            return (<ExerciseElement exercise={exercise} />)
-          })}
-
+          <Text style={styles.exerciseText}>Bench Press - 4x10</Text>
+          <View style={styles.lineStyle} />
+          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
+          <View style={styles.lineStyle} />
+          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
+          <View style={styles.lineStyle} />
+          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
+          <View style={styles.lineStyle} />
+          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
+          <View style={styles.lineStyle} />
+          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
+          <View style={styles.lineStyle} />
+          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
+          <View style={styles.lineStyle} />
+          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
+          <View style={styles.lineStyle} />
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -55,7 +73,7 @@ const ViewWorkout = () => {
 
 const styles = StyleSheet.create({
   scroll: {
-    height: 320,
+    height: 130,
     width: 300,
     margin: 8,
     borderRadius: SIZES.small / 1.25,
@@ -80,6 +98,11 @@ const styles = StyleSheet.create({
     fontSize: 25,
     margin: 5,
   },
+  subTitleText: {
+    fontSize: 20,
+    marginTop: 5,
+    textAlign: "left",
+  },
 });
 
-export default ViewWorkout;
+export default ViewPost;

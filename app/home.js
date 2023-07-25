@@ -69,7 +69,7 @@ const Home = () => {
         {/* Feed Scroll */}
         <ScrollView style={styles.scroll}>
           {feed.map((post) => {
-              return (<PostSmallView post={post} />)
+            return (<PostSmallView post={post} />)
           })}
         </ScrollView>
       </View>
@@ -90,7 +90,7 @@ const Home = () => {
           iconUrl={icons.workout} 
           dimension={40}
           handlePress={() => {
-            router.push("/viewWorkout")
+            router.push("/workouts")
           }}/>
         <FooterButton 
           iconUrl={icons.settings} 

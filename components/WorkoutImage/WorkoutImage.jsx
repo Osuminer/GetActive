@@ -4,7 +4,7 @@ import styles from "./workoutimage.style";
 
 const WorkoutImage = ({ iconUrl, dimension, handlePress }) => {
   return (
-    <TouchableOpacity style={styles.btnContainer} onPress={handlePress}>
+    <TouchableOpacity style={[styles.btnContainer, {margin:0}]} onPress={handlePress}>
       <Image
         source={iconUrl}
         resizeMode='cover'

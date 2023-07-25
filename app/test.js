@@ -27,7 +27,7 @@ const Test = () => {
             <Button 
               title=">"
               onPress={() => {
-                router.push('/viewWorkout')
+                router.push('')
               }}/>
           ),
           headerTitle: "Test",
