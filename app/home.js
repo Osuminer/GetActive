@@ -57,7 +57,7 @@ const Home = () => {
           <TouchableOpacity 
             style={styles.addPostTouchOpac}
             onPress={() => {
-              router.push("/test")
+              router.push("/addPost")
             }}>
             <Text>Add Post...</Text>
             <Image 
