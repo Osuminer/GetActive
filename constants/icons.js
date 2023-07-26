@@ -16,6 +16,7 @@ import home from '../assets/icons/home.png'
 import settings from '../assets/icons/settings.png'
 import calender from '../assets/icons/calender.png'
 import workout from '../assets/icons/workout.png'
+import checkmark from '../assets/icons/checkmark.png'
 
 
 export default {
@@ -37,4 +38,5 @@ export default {
   settings,
   calender,
   workout,
+  checkmark
 };
