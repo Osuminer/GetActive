@@ -99,7 +99,7 @@ const Workouts = () => {
           iconUrl={icons.workout}
           dimension={40}
           handlePress={() => {
-            router.push("/workout");
+            router.push("/workouts");
           }}/>
         <FooterButton 
           iconUrl={icons.settings} 
