@@ -12,20 +12,6 @@ import ExerciseInput from "../components/Workout/ExerciseInput";
 const AddWorkout = () => {
   const router = useRouter()
   let workout = new Workout()
-  let exerciseList = []
-  let index = 0
-  // const [exerciseList, setExerciseList] = useState([])
-//   const params = useLocalSearchParams()
-//   const post = JSON.parse(params.post)
-
-  // getInitialState() {
-  //   return { exerciseList: [] }
-  // }
-
-  // _addExercise() {
-  //   this.state.exerciseList.push(index++)
-  //   this.setState({ exerciseList: this.state.exerciseList })
-  // }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -60,32 +46,19 @@ const AddWorkout = () => {
             <Text>Add Picture</Text>
           </TouchableOpacity>
         </View>
-        
-        <View style={styles.addExerciseView}>
-          <TouchableOpacity 
-            style={styles.addExerciseTouchOpac}
-            onPress={() => {
-              exerciseList.push(new Exercise())
-              console.log(exerciseList)
-            }}>
-            <Text>Add Exercise...</Text>
-            <Image 
-              style={styles.image}
-              source={icons.plus} />
-          </TouchableOpacity>
-        </View>
 
+        <Text style={styles.subTitleText}>Exercises:</Text>
         <ScrollView style={styles.scroll}
           contentContainerStyle={{
             justifyContent: "center",
             alignItems: "center",
             }}>
-          
-          {exerciseList.map((exercise) => {
-            return (<ExerciseInput key={exerciseList.length()}/>)
-          })}
 
-
+            <ExerciseInput />
+            <ExerciseInput />
+            <ExerciseInput />
+            <ExerciseInput />
+            <ExerciseInput />
 
         </ScrollView>
       </View>
@@ -103,7 +76,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   scroll: {
-    height: 320,
+    height: 400,
     width: 300,
     marginHorizontal: 8,
     paddingHorizontal: 10,
