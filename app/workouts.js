@@ -55,8 +55,11 @@ const Workouts = () => {
           ),
           headerRight: () => (
             <ScreenHeaderBtn
-              iconUrl={icons.ellipsis}
+              iconUrl={icons.plus}
               dimension="70%"
+              handlePress={() => {
+                router.push("/addWorkout");
+              }}
             />
           ),
           headerTitle: "",

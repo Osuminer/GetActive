@@ -24,7 +24,13 @@ const Home = () => {
                   workout='', 
                   description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At tellus at urna condimentum mattis. Lectus urna duis convallis convallis tellus. Aliquet nibh praesent tristique magna sit amet purus gravida. Molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit. ')
 
-  const feed = [post1, post2];
+let post3 = new Post(
+  id=3, 
+  title='test3', 
+  workout='', 
+  description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At tellus at urna condimentum mattis. Lectus urna duis convallis convallis tellus. Aliquet nibh praesent tristique magna sit amet purus gravida. Molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit. ')
+
+  const feed = [post1, post2, post3];
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
