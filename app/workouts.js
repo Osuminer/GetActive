@@ -89,15 +89,24 @@ const Workouts = () => {
           handlePress={() => {
             router.push("/home");
           }}/>
-        <FooterButton iconUrl={icons.calender} dimension={40} />
+        <FooterButton 
+          iconUrl={icons.calender} 
+          dimension={40} 
+          handlePress={() => {
+            router.push('/calender')
+          }}/>
         <FooterButton
           iconUrl={icons.workout}
           dimension={40}
           handlePress={() => {
-            router.push("");
-          }}
-        />
-        <FooterButton iconUrl={icons.settings} dimension={40} />
+            router.push("/workout");
+          }}/>
+        <FooterButton 
+          iconUrl={icons.settings} 
+          dimension={40} 
+          handlePress={() => {
+            router.push('/settings')
+          }}/>
       </View>
     </SafeAreaView>
   );

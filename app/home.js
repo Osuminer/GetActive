@@ -75,7 +75,7 @@ let post3 = new Post(
         {/* Feed Scroll */}
         <ScrollView style={styles.scroll}>
           {feed.map((post) => {
-            return (<PostSmallView post={post} />)
+            return (<PostSmallView post={post} key={post.id} />)
           })}
         </ScrollView>
       </View>
@@ -88,10 +88,16 @@ let post3 = new Post(
       <View style={styles.footerView}>
         <FooterButton 
           iconUrl={icons.home} 
-          dimension={40}/>
+          dimension={40}
+          handlePress={() => {
+            router.push('/home')
+          }}/>
         <FooterButton 
           iconUrl={icons.calender} 
-          dimension={40}/>
+          dimension={40}
+          handlePress={() => {
+            router.push('/calender')
+          }}/>
         <FooterButton 
           iconUrl={icons.workout} 
           dimension={40}
@@ -100,7 +106,10 @@ let post3 = new Post(
           }}/>
         <FooterButton 
           iconUrl={icons.settings} 
-          dimension={40}/>
+          dimension={40}
+          handlePress={() => {
+            router.push('/settings')
+          }}/>
       </View>
 
     </SafeAreaView>
