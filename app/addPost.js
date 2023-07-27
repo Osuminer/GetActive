@@ -151,8 +151,9 @@ const styles = StyleSheet.create({
   workoutTouchOpac: {
     alignItems: 'center',
     width: 300,
-    margin: 8,
-    padding: 8,
+    marginHorizontal: 8,
+    marginVertical: 5,
+    padding: 15,
     borderRadius: SIZES.small / 1.25,
   },
   lineStyle: {
