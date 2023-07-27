@@ -27,7 +27,7 @@ const Test = () => {
             <Button 
               title=">"
               onPress={() => {
-                router.push('')
+                router.push('/login')
               }}/>
           ),
           headerTitle: "Test",
