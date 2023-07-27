@@ -33,6 +33,9 @@ const Home = () => {
   useEffect(() => {
     getWorkouts();
   }, []);
+  useEffect(() => {
+    getWorkouts();
+  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -90,10 +93,16 @@ const Home = () => {
       <View style={styles.footerView}>
         <FooterButton 
           iconUrl={icons.home} 
-          dimension={40}/>
+          dimension={40}
+          handlePress={() => {
+            router.push('/home')
+          }}/>
         <FooterButton 
           iconUrl={icons.calender} 
-          dimension={40}/>
+          dimension={40}
+          handlePress={() => {
+            router.push('/calender')
+          }}/>
         <FooterButton 
           iconUrl={icons.workout} 
           dimension={40}
@@ -103,7 +112,10 @@ const Home = () => {
           }}/>
         <FooterButton 
           iconUrl={icons.settings} 
-          dimension={40}/>
+          dimension={40}
+          handlePress={() => {
+            router.push('/settings')
+          }}/>
       </View>
 
     </SafeAreaView>
