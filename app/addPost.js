@@ -61,8 +61,9 @@ const AddPost = () => {
   };
 
   const sendPostRequest = async ( post ) => {
+    console.log(post)
     var url = config.baseURL + '/posts'
-    var response = await fetch(url, {
+    await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -71,6 +72,7 @@ const AddPost = () => {
         "workoutId": post.workoutId
       })
     });
+    router.push('/home');
   }
 
   const renderItem = (workout) => {
@@ -89,6 +91,7 @@ const AddPost = () => {
   }, []);
 
   return (
+    
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
       <Stack.Screen
         options={{
@@ -99,7 +102,7 @@ const AddPost = () => {
               iconUrl={icons.backArrow} 
               dimension='60%' 
               handlePress={() => {
-              	router.push("/home")
+                router.push("/home")
                 }}/>
           ),
           headerRight: () => (
@@ -111,7 +114,7 @@ const AddPost = () => {
           headerTitle: "",
         }}
       />
-
+      
       <View style={styles.view}>
         <TextInput 
           style={styles.titleText}
@@ -136,11 +139,12 @@ const AddPost = () => {
         
         <TextInput 
           style={styles.descTextInput}
+          defaultValue={description}
+          onChangeText={setDescription}
           multiline
           placeholder="Description"/>
-
-      </View>
-    </SafeAreaView>
+        </View>
+    </SafeAreaView>   
   );
 };
 
