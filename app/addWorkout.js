@@ -16,8 +16,8 @@ const AddWorkout = () => {
   const [ exercises, setExercises] = useState([]);
 
   const [ exerciseTitle, setExerciseTitle] = useState('');
-  const [ sets, setSets ] = useState('0');
-  const [ reps, setReps] = useState('0');
+  const [ sets, setSets ] = useState('');
+  const [ reps, setReps] = useState('');
 
   const [ workout, setWorkout ] = useState()
 
@@ -70,7 +70,7 @@ const AddWorkout = () => {
           placeholderTextColor={'#444444'}
           defaultValue={workoutTitle}
           onChangeText={workoutTitle => setWorkoutTitle(workoutTitle)}
-          maxLength={20}/>
+          maxLength={10}/>
         
         <View style={styles.buttonView}>
           <TouchableOpacity style={styles.touchOpac}>
@@ -106,12 +106,12 @@ const AddWorkout = () => {
         </View>
 
         {/* Button to add exercise to array */}
-        <Button 
+        <TouchableOpacity
           style={styles.submitButton}
-          // onPress={() => addExercise('test', 1, 2)}
-          onPress={() => addExercise( exerciseTitle, sets, reps )}
-          title="Add Exercise">
-        </Button>
+          onPress={() => addExercise( exerciseTitle, sets, reps )}>
+
+          <Text>Add Exercise</Text>
+        </TouchableOpacity>
 
         <View style={styles.lineStyle}/>
 

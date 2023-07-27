@@ -1,15 +1,51 @@
-import { useState } from "react";
-import {SafeAreaView, ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { useState, useCallback } from "react";
+import {SafeAreaView, ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 
 import { COLORS, icons, images, SIZES } from "../constants";
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn/ScreenHeaderBtn";
 
+let workoutData = [
+  {
+    id: 1,
+    title:'1'
+  },
+  {
+    id: 2,
+    title:'2'
+  },
+  {
+    id: 3,
+    title:'3'
+  }
+]
+
+const Item = ({ workout, onPress, backgroundColor}) => (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.touchOpac, {backgroundColor}]}>
+
+      <Text>{workout.title}</Text>
+    </TouchableOpacity>
+)
+
 
 const AddPost = () => {
   const router = useRouter()
-//   const params = useLocalSearchParams()
-//   const post = JSON.parse(params.post)
+
+  const [ selectedId, setSelectedId ] = useState();
+
+  const renderItem = (workout) => {
+    const backgroundColor = workout.id === selectedId ? '#6e3b6e' : '#f9c2ff'
+    console.log(workout.id)
+
+    return (
+      <Item
+        workout={workout}
+        onPress={() => setSelectedId(workout.id)}
+        backgroundColor={backgroundColor}/>
+    )
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -38,12 +74,11 @@ const AddPost = () => {
           defaultValue="New Post"
           maxLength={20}/>
         
-        <View style={styles.buttonView}>
-          <TouchableOpacity style={styles.touchOpac}>
-            <Image style={styles.image} source={icons.plus} />
-            <Text>Add Workout</Text>
-          </TouchableOpacity>
-        </View>
+        <FlatList
+          data={workoutData}
+          renderItem={renderItem}
+          keyExtractor={workout => workout.id}
+          extraData={selectedId}/>
 
         <Text style={styles.subTitleText}>Description:</Text>
         
