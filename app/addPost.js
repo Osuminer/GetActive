@@ -8,22 +8,26 @@ import ScreenHeaderBtn from "../components/ScreenHeaderBtn/ScreenHeaderBtn";
 let workoutData = [
   {
     id: 1,
-    title:'1'
+    title:'Chest Day'
   },
   {
     id: 2,
-    title:'2'
+    title:'Back Day'
   },
   {
     id: 3,
-    title:'3'
+    title:'Leg Day'
+  },
+  {
+    id: 4,
+    title:'Test Day'
   }
 ]
 
 const Item = ({ workout, onPress, backgroundColor}) => (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.touchOpac, {backgroundColor}]}>
+      style={[styles.workoutTouchOpac, {backgroundColor}]}>
 
       <Text>{workout.title}</Text>
     </TouchableOpacity>
@@ -36,13 +40,12 @@ const AddPost = () => {
   const [ selectedId, setSelectedId ] = useState();
 
   const renderItem = (workout) => {
-    const backgroundColor = workout.id === selectedId ? '#6e3b6e' : '#f9c2ff'
-    console.log(workout.id)
+    const backgroundColor = workout.item.id === selectedId ? '#ababab' : '#eaeaea'
 
     return (
       <Item
-        workout={workout}
-        onPress={() => setSelectedId(workout.id)}
+        workout={workout.item}
+        onPress={() => setSelectedId(workout.item.id)}
         backgroundColor={backgroundColor}/>
     )
   }
@@ -74,11 +77,18 @@ const AddPost = () => {
           defaultValue="New Post"
           maxLength={20}/>
         
+
+        <Text style={styles.subTitleText}>Workout:</Text>
+
+
         <FlatList
+          style={styles.workoutFlatList}
           data={workoutData}
           renderItem={renderItem}
           keyExtractor={workout => workout.id}
           extraData={selectedId}/>
+
+        <View style={styles.lineStyle} />
 
         <Text style={styles.subTitleText}>Description:</Text>
         
@@ -94,7 +104,7 @@ const AddPost = () => {
 
 const styles = StyleSheet.create({
   descTextInput: {
-    height: 300,
+    height: 200,
     width: 300,
     margin: 8,
     borderRadius: SIZES.small / 1.25,
@@ -119,7 +129,7 @@ const styles = StyleSheet.create({
   },
   subTitleText: {
     fontSize: 20,
-    marginTop: 5,
+    marginTop: 45,
     textAlign: "left",
   },
   image: {
@@ -137,6 +147,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 250,
     margin: 8,
+  },
+  workoutTouchOpac: {
+    alignItems: 'center',
+    width: 300,
+    margin: 8,
+    padding: 8,
+    borderRadius: SIZES.small / 1.25,
+  },
+  lineStyle: {
+		width: 330,
+		borderColor: '#bbbbbb',
+		borderWidth: 1,
+  },
+  workoutFlatList: {
+    height: 150,
   }
 });
 
