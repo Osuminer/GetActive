@@ -70,7 +70,7 @@ const AddWorkout = () => {
           placeholderTextColor={'#444444'}
           defaultValue={workoutTitle}
           onChangeText={workoutTitle => setWorkoutTitle(workoutTitle)}
-          maxLength={20}/>
+          maxLength={10}/>
         
         <View style={styles.buttonView}>
           <TouchableOpacity style={styles.touchOpac}>
