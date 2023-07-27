@@ -22,19 +22,17 @@ const AddWorkout = () => {
   const [ workout, setWorkout ] = useState()
 
   const addExercise = ( title, sets , reps ) => {
-    console.log(workoutTitle)
-    console.log(exercises)
     setExercises(exercises => [...exercises, { title: title, sets: sets, reps: reps}])
   }
 
   const sendPostRequest = async ( workout ) => {
     var url = config.baseURL + '/workouts'
-    var response = await fetch(url, {
+    await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        "title": workoutTitle,
-        "exercises": exercises
+        "title": workout.title,
+        "exercises": workout.exercises
       })
     });
   }
@@ -91,7 +89,7 @@ const AddWorkout = () => {
             placeholderTextColor={'#444444'}
             defaultValue={exerciseTitle}
             blurOnSubmit={true}
-            onChangeText={newExerciseTitle =>  { console.log(newExerciseTitle); setExerciseTitle(newExerciseTitle) } } />
+            onChangeText={setExerciseTitle} />
           <TextInput
             style={styles.textInput}
             placeholder="Sets"
@@ -99,7 +97,7 @@ const AddWorkout = () => {
             keyboardType="numeric"
             blurOnSubmit={true}
             defaultValue={sets}
-            onChangeText={newSet => { console.log(newSet); setSets(newSet)}} />
+            onChangeText={setSets} />
           <TextInput
             style={styles.textInput}
             placeholder="Reps"
@@ -107,7 +105,7 @@ const AddWorkout = () => {
             keyboardType="numeric"
             blurOnSubmit={true}
             defaultValue={reps}
-            onChangeText={newRep => { console.log(newRep); setReps(newRep) } } />
+            onChangeText={setReps} />
         </View>
 
         {/* Button to add exercise to array */}
@@ -130,11 +128,6 @@ const AddWorkout = () => {
           {exercises.map((exercise) => {
             return (<ExerciseElement key={exercise.id} exercise={exercise} />)
           })}
-
-          {/* {exercises.map((exercise) => {
-            return (<Text key={exercise.id}>{exercise.title} </Text>)
-          })} */}
-
         </ScrollView>
 
       </View>

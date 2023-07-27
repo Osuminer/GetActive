@@ -45,20 +45,6 @@ const Workouts = () => {
     getWorkouts();
   }, []);
 
-  // let workout1 = new Workout(
-  //   id = 1,
-  //   title = "workout1",
-  //   exercises = ["Bench Press - 4x10", "Push Ups - 3x20"]
-  // );
-
-  // let workout2 = new Workout(
-  //   id = 1,
-  //   title = "workout2",
-  //   exercises = ["Push Ups - 3x20", "Bench Press - 4x10"]
-  // );
-
-  // const workouts = [workout1, workout2]
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
       {/* Header: Profile icon and Home text */}
@@ -98,7 +84,7 @@ const Workouts = () => {
         numColumns={2}
         renderItem={(workout) => <WorkoutSmallView workout={workout.item} /> }
         style={{height: 430}}
-        contentContainerStyle={{ paddingVertical: 20, alignItems: 'center'}}/>
+        contentContainerStyle={{ paddingVertical: 20, alignItems: 'left'}}/>
 
       {/* Footer Separator */}
       <View style={styles.footerLine} />

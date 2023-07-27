@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { Alert, Button, SafeAreaView, ScrollView, View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { Alert, Button, SafeAreaView, ScrollView, View, Text, StyleSheet, TouchableOpacity, Image, useColorScheme } from "react-native";
 import { Stack, useRouter } from "expo-router";
 
 import { COLORS, icons, images, SIZES } from "../constants";
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn/ScreenHeaderBtn";
 import FooterButton from "../components/FooterButton";
-
+import SettingsTab from "../components/SettingsTab/SettingsTab";
 
 const Settings = () => {
   const router = useRouter()
-
+  const isDarkMode = useColorScheme() === 'dark';
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? COLORS.lightWhite : COLORS.gray2 }}>
 
       {/* Header: Profile icon and Home text */}
       <Stack.Screen
@@ -37,7 +37,27 @@ const Settings = () => {
           ),
           headerTitle: "",
         }}/>
+        <View style={styles.view}>
+        <Text style={styles.titleText}>Settings</Text>
+      </View>
 
+        {/* Contains Settings Tabs */}
+      <View style={styles.view}>
+
+        {/* Feed Scroll */}
+        <ScrollView style={styles.scroll}>
+          <SettingsTab title='this is a setting page'/> 
+          <SettingsTab title='this is a setting page'/> 
+          <SettingsTab title='this is a setting page'/> 
+          <SettingsTab title='this is a setting page'/> 
+          <SettingsTab title='this is a setting page'/> 
+          <SettingsTab title='this is a setting page'/> 
+        </ScrollView>
+      </View>
+
+        
+        {/* Footer Separator */}
+      <View style={styles.footerLine} />
 
 	    {/* Footer Buttons */}
 		  <View style={styles.footerView}>
@@ -66,14 +86,23 @@ const Settings = () => {
             router.push('/settings')
           }}/>
       </View>
-
-
     </SafeAreaView>
   );
 };
 
 
 const styles = StyleSheet.create({
+  scroll: {
+    height: 420,
+    width: '100%',
+    margin: 8,
+    borderRadius: SIZES.small / 1.25,
+    paddingBottom: 10,
+  },
+  view: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
   footerLine: {
     width: '100%',
 	  borderColor: '#ededed',
@@ -84,7 +113,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-  }
+  },
+  titleText: {
+    fontSize: 25,
+    margin: 5,
+  },
+  postView: {
+	  paddingVertical: 5,
+	  marginBottom: 10,
+	  borderRadius: SIZES.small / 1.25,
+	  backgroundColor: '#eaeaea',
+	},
 });
 
 
