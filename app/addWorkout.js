@@ -1,5 +1,5 @@
 import { useState, setState } from "react";
-import {SafeAreaView, ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {SafeAreaView, ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Button } from "react-native";
 import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 
 import { COLORS, icons, images, SIZES } from "../constants";
@@ -7,7 +7,6 @@ import ScreenHeaderBtn from "../components/ScreenHeaderBtn/ScreenHeaderBtn";
 import Workout from "../components/Workout/Workout";
 import Exercise from "../components/Workout/Exercise";
 import ExerciseInput from "../components/Workout/ExerciseInput";
-import { Button } from "react-native-web";
 import config from '../config';
 
 
@@ -76,6 +75,8 @@ const AddWorkout = () => {
       <View style={styles.view}>
         <TextInput 
           style={styles.titleText}
+          placeholder="New Workout"
+          placeholderTextColor={'#444444'}
           value={workoutTitle}
           onChange={setWorkoutTitle}
           maxLength={20}/>
@@ -86,34 +87,50 @@ const AddWorkout = () => {
             <Text>Add Picture</Text>
           </TouchableOpacity>
         </View>
-
+        
         <Text style={styles.subTitleText}>Exercises:</Text>
+
+        {/* Text Inputs for exercise to be added */}
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Title"
+            placeholderTextColor={'#444444'}
+            value={exerciseTitle}
+            onChange={setExerciseTitle} />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Sets"
+            placeholderTextColor={'#444444'}
+            value={sets}
+            onChange={setSets} />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Reps"
+            placeholderTextColor={'#444444'}
+            value={reps}
+            onChange={setReps} />
+        </View>
+
+        {/* Button to add exercise to array */}
+        <TouchableOpacity 
+          style={styles.submitButton}>
+          <Text>Submit</Text>
+        </TouchableOpacity>
+
+        {/* Scroll View for finalized exercises */}
         <ScrollView style={styles.scroll}
           contentContainerStyle={{
             justifyContent: "center",
             alignItems: "center",
             }}>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <TextInput
-                style={styles.textInput}
-                placeholder="Title"
-                placeholderTextColor={'#444444'}
-                value={exerciseTitle}
-                onChange={setExerciseTitle} />
-              <TextInput
-                style={styles.textInput}
-                placeholder="Sets"
-                placeholderTextColor={'#444444'}
-                value={sets}
-                onChange={setSets} />
-              <TextInput
-                style={styles.textInput}
-                placeholder="Reps"
-                placeholderTextColor={'#444444'}
-                value={reps}
-                onChange={setReps} />
-		      </View>
+          
+          {exercises.map((exercise) => {
+            return (<ExerciseElement key={exercise.id} exercise={exercise} />)
+          })}
+
         </ScrollView>
+
       </View>
     </SafeAreaView>
   );
@@ -129,10 +146,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   scroll: {
-    height: 400,
+    height: 200,
     width: 300,
-    marginHorizontal: 8,
-    paddingHorizontal: 10,
+    margin: 8,
+    borderRadius: SIZES.small / 1.25,
+    backgroundColor: '#eaeaea',
+    padding: 10,
   },
   view: {
     justifyContent: "center",
@@ -180,10 +199,18 @@ const styles = StyleSheet.create({
   },
   textInput: {
 		padding: 15,
-		  margin: 10,
-		  borderRadius: SIZES.small / 1.25,
-		  backgroundColor: '#eaeaea',
-	  },
+    margin: 10,
+    borderRadius: SIZES.small / 1.25,
+    backgroundColor: '#eaeaea',
+  },
+  submitButton: {
+    width: 300,
+    padding: 15,
+    margin: 10,
+    borderRadius: SIZES.small / 1.25,
+    backgroundColor: '#eaeaea',
+    alignItems: 'center',
+  }
 });
 
 export default AddWorkout;
