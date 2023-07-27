@@ -54,9 +54,11 @@ const AddWorkout = () => {
                 }}/>
           ),
           headerRight: () => (
-            <ScreenHeaderBtn handlePress={() => {
-              setWorkout(new Workout(0, workoutTitle, exercises))
-              sendPostRequest( workout )
+            <ScreenHeaderBtn 
+              handlePress={() => {
+                setWorkout(new Workout(0, workoutTitle, exercises))
+                sendPostRequest( workout )
+                router.push("/blankWorkout")
             }} iconUrl={icons.checkmark} dimension='50%' />
           ),
           headerTitle: "",
@@ -88,12 +90,14 @@ const AddWorkout = () => {
             placeholder="Title"
             placeholderTextColor={'#444444'}
             defaultValue={exerciseTitle}
+            blurOnSubmit={true}
             onChangeText={newExerciseTitle =>  { console.log(newExerciseTitle); setExerciseTitle(newExerciseTitle) } } />
           <TextInput
             style={styles.textInput}
             placeholder="Sets"
             placeholderTextColor={'#444444'}
             keyboardType="numeric"
+            blurOnSubmit={true}
             defaultValue={sets}
             onChangeText={newSet => { console.log(newSet); setSets(newSet)}} />
           <TextInput
@@ -101,6 +105,7 @@ const AddWorkout = () => {
             placeholder="Reps"
             placeholderTextColor={'#444444'}
             keyboardType="numeric"
+            blurOnSubmit={true}
             defaultValue={reps}
             onChangeText={newRep => { console.log(newRep); setReps(newRep) } } />
         </View>

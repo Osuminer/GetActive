@@ -39,7 +39,7 @@ const Item = ({ workout, onPress, backgroundColor}) => (
 const AddPost = () => {
   const router = useRouter()
   const [ isLoading, setLoading ] = useState(true);
-  const [ title, setTitle ] = useState('New Post');
+  const [ title, setTitle ] = useState('');
   const [ description, setDescription ] = useState('');
   const [ workouts, setWorkouts ] = useState([]);
   const [ selectedId, setSelectedId ] = useState();
@@ -72,7 +72,6 @@ const AddPost = () => {
         "workoutId": post.workoutId
       })
     });
-    router.push('/home');
   }
 
   const renderItem = (workout) => {
@@ -109,7 +108,9 @@ const AddPost = () => {
             <ScreenHeaderBtn 
             iconUrl={icons.checkmark} 
             dimension='50%'
-            handlePress={() => sendPostRequest( { title: title, description: description, workoutId: selectedId })} />
+            handlePress={() => {
+              sendPostRequest( { title: title, description: description, workoutId: selectedId })
+              router.push("/blankPost")}}/>
           ),
           headerTitle: "",
         }}
@@ -119,30 +120,37 @@ const AddPost = () => {
         <TextInput 
           style={styles.titleText}
           defaultValue={title}
+          placeholderTextColor={'#444444'}
+          placeholder="New Workout"
           onChangeText={setTitle}
           maxLength={20}/>
         
 
-        <Text style={styles.subTitleText}>Workout:</Text>
+          {/* Description Text Box */}
+          <Text style={styles.subTitleText}>Description:</Text>
+          
+          <TextInput 
+            style={styles.descTextInput}
+            defaultValue={description}
+            onChangeText={setDescription}
+            multiline
+            placeholder="Description"
+            blurOnSubmit={true}/>
 
+          <View style={styles.lineStyle} />
 
-        <FlatList
-          style={styles.workoutFlatList}
-          data={workouts}
-          renderItem={renderItem}
-          keyExtractor={workout => workout.id}
-          extraData={selectedId}/>
+          {/* Workout Selection */}
+          <Text style={styles.subTitleText}>Workout:</Text>
 
-        <View style={styles.lineStyle} />
+          <FlatList
+            style={styles.workoutFlatList}
+            data={workouts}
+            renderItem={renderItem}
+            keyExtractor={workout => workout.id}
+            extraData={selectedId}/>
 
-        <Text style={styles.subTitleText}>Description:</Text>
+          <View style={styles.lineStyle} />
         
-        <TextInput 
-          style={styles.descTextInput}
-          defaultValue={description}
-          onChangeText={setDescription}
-          multiline
-          placeholder="Description"/>
         </View>
     </SafeAreaView>   
   );
@@ -175,7 +183,7 @@ const styles = StyleSheet.create({
   },
   subTitleText: {
     fontSize: 20,
-    marginTop: 45,
+    marginTop: 30,
     textAlign: "left",
   },
   image: {
