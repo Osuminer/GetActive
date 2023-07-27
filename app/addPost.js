@@ -1,9 +1,11 @@
-import { useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {SafeAreaView, ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 
 import { COLORS, icons, images, SIZES } from "../constants";
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn/ScreenHeaderBtn";
+
+import config from '../config';
 
 let workoutData = [
   {
@@ -36,8 +38,40 @@ const Item = ({ workout, onPress, backgroundColor}) => (
 
 const AddPost = () => {
   const router = useRouter()
-
+  const [ isLoading, setLoading ] = useState(true);
+  const [ title, setTitle ] = useState('New Post');
+  const [ description, setDescription ] = useState('');
+  const [ workouts, setWorkouts ] = useState([]);
   const [ selectedId, setSelectedId ] = useState();
+
+
+  const getWorkouts = async () => {
+    try {
+      const t = config.baseURL + '/workouts'
+      console.log(t)
+      const response = await fetch(t);
+      const json = await response.json();
+      setWorkouts(json);
+      // console.log(json)
+    } catch( error ) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const sendPostRequest = async ( post ) => {
+    var url = config.baseURL + '/posts'
+    var response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        "title": post.title,
+        "description": post.description,
+        "workoutId": post.workoutId
+      })
+    });
+  }
 
   const renderItem = (workout) => {
     const backgroundColor = workout.item.id === selectedId ? '#ababab' : '#eaeaea'
@@ -49,6 +83,10 @@ const AddPost = () => {
         backgroundColor={backgroundColor}/>
     )
   }
+
+  useEffect(() => {
+    getWorkouts();
+  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -65,7 +103,10 @@ const AddPost = () => {
                 }}/>
           ),
           headerRight: () => (
-            <ScreenHeaderBtn iconUrl={icons.checkmark} dimension='50%' />
+            <ScreenHeaderBtn 
+            iconUrl={icons.checkmark} 
+            dimension='50%'
+            handlePress={() => sendPostRequest( { title: title, description: description, workoutId: selectedId })} />
           ),
           headerTitle: "",
         }}
@@ -74,7 +115,8 @@ const AddPost = () => {
       <View style={styles.view}>
         <TextInput 
           style={styles.titleText}
-          defaultValue="New Post"
+          defaultValue={title}
+          onChangeText={setTitle}
           maxLength={20}/>
         
 
@@ -83,7 +125,7 @@ const AddPost = () => {
 
         <FlatList
           style={styles.workoutFlatList}
-          data={workoutData}
+          data={workouts}
           renderItem={renderItem}
           keyExtractor={workout => workout.id}
           extraData={selectedId}/>

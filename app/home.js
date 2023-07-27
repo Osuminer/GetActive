@@ -33,9 +33,6 @@ const Home = () => {
   useEffect(() => {
     getWorkouts();
   }, []);
-  useEffect(() => {
-    getWorkouts();
-  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
