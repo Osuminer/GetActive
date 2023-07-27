@@ -1,4 +1,4 @@
-import { useState, setState } from "react";
+import { useState } from "react";
 import {SafeAreaView, ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Button } from "react-native";
 import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 
@@ -14,11 +14,18 @@ const AddWorkout = () => {
   const router = useRouter()
   const [ workoutTitle, setWorkoutTitle ] = useState('');
   const [ exercises, setExercises] = useState([]);
+
   const [ exerciseTitle, setExerciseTitle] = useState('');
-  const [ sets, setSets ] = useState(0);
-  const [ reps, setReps] = useState(0)
+  const [ sets, setSets ] = useState('0');
+  const [ reps, setReps] = useState('0');
 
   const [ workout, setWorkout ] = useState()
+
+  const addExercise = ( title, sets , reps ) => {
+    console.log(workoutTitle)
+    console.log(exercises)
+    setExercises(exercises => [...exercises, { title: title, sets: sets, reps: reps}])
+  }
 
   const sendPostRequest = async ( workout ) => {
     var url = config.baseURL + '/workouts'
@@ -26,26 +33,10 @@ const AddWorkout = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        "title": "Insane in the membrane day",
-        "exercises": [{
-          "title": "read book",
-          "sets": 10,
-          "reps": 8
-        },
-        {
-          "title": "read math book",
-          "sets": 10,
-          "reps": 8
-        },
-        {
-          "title": "read english book",
-          "sets": 10,
-          "reps": 8
-        }
-        ]
+        "title": workoutTitle,
+        "exercises": exercises
       })
     });
-    console.log(response);
   }
   
   return (
@@ -77,8 +68,8 @@ const AddWorkout = () => {
           style={styles.titleText}
           placeholder="New Workout"
           placeholderTextColor={'#444444'}
-          value={workoutTitle}
-          onChange={setWorkoutTitle}
+          defaultValue={workoutTitle}
+          onChangeText={workoutTitle => setWorkoutTitle(workoutTitle)}
           maxLength={20}/>
         
         <View style={styles.buttonView}>
@@ -96,27 +87,31 @@ const AddWorkout = () => {
             style={styles.textInput}
             placeholder="Title"
             placeholderTextColor={'#444444'}
-            value={exerciseTitle}
-            onChange={setExerciseTitle} />
+            defaultValue={exerciseTitle}
+            onChangeText={newExerciseTitle =>  { console.log(newExerciseTitle); setExerciseTitle(newExerciseTitle) } } />
           <TextInput
             style={styles.textInput}
             placeholder="Sets"
             placeholderTextColor={'#444444'}
-            value={sets}
-            onChange={setSets} />
+            keyboardType="numeric"
+            defaultValue={sets}
+            onChangeText={newSet => { console.log(newSet); setSets(newSet)}} />
           <TextInput
             style={styles.textInput}
             placeholder="Reps"
             placeholderTextColor={'#444444'}
-            value={reps}
-            onChange={setReps} />
+            keyboardType="numeric"
+            defaultValue={reps}
+            onChangeText={newRep => { console.log(newRep); setReps(newRep) } } />
         </View>
 
         {/* Button to add exercise to array */}
-        <TouchableOpacity 
-          style={styles.submitButton}>
-          <Text>Add Exercise</Text>
-        </TouchableOpacity>
+        <Button 
+          style={styles.submitButton}
+          // onPress={() => addExercise('test', 1, 2)}
+          onPress={() => addExercise( exerciseTitle, sets, reps )}
+          title="Add Exercise">
+        </Button>
 
         <View style={styles.lineStyle}/>
 
@@ -130,6 +125,10 @@ const AddWorkout = () => {
           {exercises.map((exercise) => {
             return (<ExerciseElement key={exercise.id} exercise={exercise} />)
           })}
+
+          {/* {exercises.map((exercise) => {
+            return (<Text key={exercise.id}>{exercise.title} </Text>)
+          })} */}
 
         </ScrollView>
 
