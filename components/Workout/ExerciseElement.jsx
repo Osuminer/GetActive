@@ -6,7 +6,7 @@ import { Stack, useRouter } from "expo-router";
 const ExerciseElement = ({ exercise }) => {	
 	return (
 		<View>
-			<Text style={styles.exerciseText}>{exercise}</Text>
+			<Text style={styles.exerciseText}>{exercise.title} | {exercise.sets} X {exercise.reps}</Text>
 			<View style={styles.lineStyle} />
 		</View>
   );

@@ -1,18 +1,44 @@
-import { useState, setState } from "react";
-import {SafeAreaView, ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { useState } from "react";
+import {SafeAreaView, ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Button } from "react-native";
 import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 
 import { COLORS, icons, images, SIZES } from "../constants";
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn/ScreenHeaderBtn";
 import Workout from "../components/Workout/Workout";
 import Exercise from "../components/Workout/Exercise";
-import ExerciseInput from "../components/Workout/ExerciseInput";
+import ExerciseElement from "../components/Workout/ExerciseElement";
+import config from '../config';
 
 
 const AddWorkout = () => {
   const router = useRouter()
-  let workout = new Workout()
+  const [ workoutTitle, setWorkoutTitle ] = useState('');
+  const [ exercises, setExercises] = useState([]);
 
+  const [ exerciseTitle, setExerciseTitle] = useState('');
+  const [ sets, setSets ] = useState('');
+  const [ reps, setReps] = useState('');
+
+  const [ workout, setWorkout ] = useState()
+
+  const addExercise = ( title, sets , reps ) => {
+    console.log(workoutTitle)
+    console.log(exercises)
+    setExercises(exercises => [...exercises, { title: title, sets: sets, reps: reps}])
+  }
+
+  const sendPostRequest = async ( workout ) => {
+    var url = config.baseURL + '/workouts'
+    var response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        "title": workoutTitle,
+        "exercises": exercises
+      })
+    });
+  }
+  
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
       <Stack.Screen
@@ -28,7 +54,12 @@ const AddWorkout = () => {
                 }}/>
           ),
           headerRight: () => (
-            <ScreenHeaderBtn iconUrl={icons.checkmark} dimension='50%' />
+            <ScreenHeaderBtn 
+              handlePress={() => {
+                setWorkout(new Workout(0, workoutTitle, exercises))
+                sendPostRequest( workout )
+                router.push("/blankWorkout")
+            }} iconUrl={icons.checkmark} dimension='50%' />
           ),
           headerTitle: "",
         }}
@@ -37,8 +68,11 @@ const AddWorkout = () => {
       <View style={styles.view}>
         <TextInput 
           style={styles.titleText}
-          defaultValue="New Workout"
-          maxLength={20}/>
+          placeholder="New Workout"
+          placeholderTextColor={'#444444'}
+          defaultValue={workoutTitle}
+          onChangeText={workoutTitle => setWorkoutTitle(workoutTitle)}
+          maxLength={10}/>
         
         <View style={styles.buttonView}>
           <TouchableOpacity style={styles.touchOpac}>
@@ -46,21 +80,63 @@ const AddWorkout = () => {
             <Text>Add Picture</Text>
           </TouchableOpacity>
         </View>
-
+        
         <Text style={styles.subTitleText}>Exercises:</Text>
+
+        {/* Text Inputs for exercise to be added */}
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Title"
+            placeholderTextColor={'#444444'}
+            defaultValue={exerciseTitle}
+            blurOnSubmit={true}
+            onChangeText={newExerciseTitle =>  { console.log(newExerciseTitle); setExerciseTitle(newExerciseTitle) } } />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Sets"
+            placeholderTextColor={'#444444'}
+            keyboardType="numeric"
+            blurOnSubmit={true}
+            defaultValue={sets}
+            onChangeText={newSet => { console.log(newSet); setSets(newSet)}} />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Reps"
+            placeholderTextColor={'#444444'}
+            keyboardType="numeric"
+            blurOnSubmit={true}
+            defaultValue={reps}
+            onChangeText={newRep => { console.log(newRep); setReps(newRep) } } />
+        </View>
+
+        {/* Button to add exercise to array */}
+        <TouchableOpacity
+          style={styles.submitButton}
+          onPress={() => addExercise( exerciseTitle, sets, reps )}>
+
+          <Text>Add Exercise</Text>
+        </TouchableOpacity>
+
+        <View style={styles.lineStyle}/>
+
+        {/* Scroll View for finalized exercises */}
         <ScrollView style={styles.scroll}
           contentContainerStyle={{
             justifyContent: "center",
             alignItems: "center",
             }}>
+          
+          {exercises.map((exercise) => {
+            return (<ExerciseElement key={exercise.id} exercise={exercise} />)
+          })}
 
-            <ExerciseInput />
-            <ExerciseInput />
-            <ExerciseInput />
-            <ExerciseInput />
-            <ExerciseInput />
+          {/* {exercises.map((exercise) => {
+            return (<Text key={exercise.id}>{exercise.title} </Text>)
+          })} */}
 
         </ScrollView>
+
       </View>
     </SafeAreaView>
   );
@@ -76,10 +152,13 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   scroll: {
-    height: 400,
+    height: 200,
     width: 300,
     marginHorizontal: 8,
-    paddingHorizontal: 10,
+    marginTop: 12,
+    borderRadius: SIZES.small / 1.25,
+    backgroundColor: '#eaeaea',
+    padding: 10,
   },
   view: {
     justifyContent: "center",
@@ -124,6 +203,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  textInput: {
+		padding: 15,
+    margin: 10,
+    borderRadius: SIZES.small / 1.25,
+    backgroundColor: '#eaeaea',
+  },
+  submitButton: {
+    width: 300,
+    padding: 15,
+    marginBottom: 10,
+    marginHorizontal: 10,
+    borderRadius: SIZES.small / 1.25,
+    backgroundColor: '#eaeaea',
+    alignItems: 'center',
+  },
+  lineStyle: {
+		width: 330,
+		borderColor: '#bbbbbb',
+		borderWidth: 1,
   },
 });
 

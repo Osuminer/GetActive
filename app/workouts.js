@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   SafeAreaView,
@@ -15,27 +15,49 @@ import { COLORS, icons, images, SIZES } from "../constants";
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn/ScreenHeaderBtn";
 import FooterButton from "../components/FooterButton";
 
-import Workout from '../components/Workout/Workout'
+import Workout from '../components/Workout/Workout';
 import WorkoutSmallView from "../components/Workout/WorkoutSmallView";
 import { FlatList } from "react-native-gesture-handler";
 
+import config from '../config';
 
 const Workouts = () => {
   const router = useRouter();
+  const [isLoading, setLoading] = useState(true);
+  const [ workouts, setWorkouts ] = useState([]);
+  // console.log(config)
+  const getWorkouts = async () => {
+    try {
+      const t = config.baseURL + '/workouts'
+      console.log(t)
+      const response = await fetch(t);
+      const json = await response.json();
+      setWorkouts(json);
+      // console.log(json)
+    } catch( error ) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  let workout1 = new Workout(
-    id = 1,
-    title = "workout1",
-    exercises = ["Bench Press - 4x10", "Push Ups - 3x20"]
-  );
+  useEffect(() => {
+    getWorkouts();
+  }, []);
 
-  let workout2 = new Workout(
-    id = 1,
-    title = "workout2",
-    exercises = ["Push Ups - 3x20", "Bench Press - 4x10"]
-  );
+  // let workout1 = new Workout(
+  //   id = 1,
+  //   title = "workout1",
+  //   exercises = ["Bench Press - 4x10", "Push Ups - 3x20"]
+  // );
 
-  const workouts = [workout1, workout2]
+  // let workout2 = new Workout(
+  //   id = 1,
+  //   title = "workout2",
+  //   exercises = ["Push Ups - 3x20", "Bench Press - 4x10"]
+  // );
+
+  // const workouts = [workout1, workout2]
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -100,6 +122,7 @@ const Workouts = () => {
           dimension={40}
           handlePress={() => {
             router.push("/workouts");
+
           }}/>
         <FooterButton 
           iconUrl={icons.settings} 
@@ -107,6 +130,7 @@ const Workouts = () => {
           handlePress={() => {
             router.push('/settings')
           }}/>
+
       </View>
     </SafeAreaView>
   );

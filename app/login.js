@@ -32,7 +32,7 @@ const Login = () => {
           style={styles.loginButton}
           title="Login"
           onPress={() => {
-            router.push('/home')
+            router.push('/blank')
           }}/>
       </View>
     </SafeAreaView>
