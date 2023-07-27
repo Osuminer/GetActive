@@ -6,7 +6,7 @@ import { COLORS, icons, images, SIZES } from "../constants";
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn/ScreenHeaderBtn";
 import Workout from "../components/Workout/Workout";
 import Exercise from "../components/Workout/Exercise";
-import ExerciseInput from "../components/Workout/ExerciseInput";
+import ExerciseElement from "../components/Workout/ExerciseElement";
 import config from '../config';
 
 
@@ -14,7 +14,7 @@ const AddWorkout = () => {
   const router = useRouter()
   const [ workoutTitle, setWorkoutTitle ] = useState('');
   const [ exercises, setExercises] = useState([]);
-  const [ exerciseTitle, setExerciseTitle] = useState('New Workout');
+  const [ exerciseTitle, setExerciseTitle] = useState('');
   const [ sets, setSets ] = useState(0);
   const [ reps, setReps] = useState(0)
 
@@ -115,8 +115,10 @@ const AddWorkout = () => {
         {/* Button to add exercise to array */}
         <TouchableOpacity 
           style={styles.submitButton}>
-          <Text>Submit</Text>
+          <Text>Add Exercise</Text>
         </TouchableOpacity>
+
+        <View style={styles.lineStyle}/>
 
         {/* Scroll View for finalized exercises */}
         <ScrollView style={styles.scroll}
@@ -148,7 +150,8 @@ const styles = StyleSheet.create({
   scroll: {
     height: 200,
     width: 300,
-    margin: 8,
+    marginHorizontal: 8,
+    marginTop: 12,
     borderRadius: SIZES.small / 1.25,
     backgroundColor: '#eaeaea',
     padding: 10,
@@ -206,11 +209,17 @@ const styles = StyleSheet.create({
   submitButton: {
     width: 300,
     padding: 15,
-    margin: 10,
+    marginBottom: 10,
+    marginHorizontal: 10,
     borderRadius: SIZES.small / 1.25,
     backgroundColor: '#eaeaea',
     alignItems: 'center',
-  }
+  },
+  lineStyle: {
+		width: 330,
+		borderColor: '#bbbbbb',
+		borderWidth: 1,
+  },
 });
 
 export default AddWorkout;
