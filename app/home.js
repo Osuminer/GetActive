@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Button, SafeAreaView, ScrollView, View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Stack, useRouter } from "expo-router";
 
@@ -8,29 +8,31 @@ import PostSmallView from "../components/Post/PostSmallView";
 import FooterButton from "../components/FooterButton";
 
 import Post from '../components/Post/Post'
+import config from '../config';
 
 const Home = () => {
   const router = useRouter()
+  const [isLoading, setLoading] = useState(true);
+  const [ posts, setPosts ] = useState([]);
 
-  let post1 = new Post(
-                  id=1, 
-                  title='test1', 
-                  workout='', 
-                  description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At tellus at urna condimentum mattis. Lectus urna duis convallis convallis tellus. Aliquet nibh praesent tristique magna sit amet purus gravida. Molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit. ')
+  const getWorkouts = async () => {
+    try {
+      const t = config.baseURL + '/posts'
+      console.log(t)
+      const response = await fetch(t);
+      const json = await response.json();
+      setPosts(json);
+      // console.log(json)
+    } catch( error ) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  let post2 = new Post(
-                  id=2, 
-                  title='test2', 
-                  workout='', 
-                  description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At tellus at urna condimentum mattis. Lectus urna duis convallis convallis tellus. Aliquet nibh praesent tristique magna sit amet purus gravida. Molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit. ')
-
-let post3 = new Post(
-  id=3, 
-  title='test3', 
-  workout='', 
-  description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At tellus at urna condimentum mattis. Lectus urna duis convallis convallis tellus. Aliquet nibh praesent tristique magna sit amet purus gravida. Molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit. ')
-
-  const feed = [post1, post2, post3];
+  useEffect(() => {
+    getWorkouts();
+  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -74,8 +76,8 @@ let post3 = new Post(
         
         {/* Feed Scroll */}
         <ScrollView style={styles.scroll}>
-          {feed.map((post) => {
-            return (<PostSmallView post={post} />)
+          {posts.map((post) => {
+            return (<PostSmallView key={post.id} post={post} />)
           })}
         </ScrollView>
       </View>
@@ -96,6 +98,7 @@ let post3 = new Post(
           iconUrl={icons.workout} 
           dimension={40}
           handlePress={() => {
+            console.log(router)
             router.push("/workouts")
           }}/>
         <FooterButton 

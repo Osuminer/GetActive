@@ -18,7 +18,7 @@ const WorkoutSmallView = ({ workout }) => {
           source={images.defaultImage} />
         <Text style={styles.postTitle}>{workout.title}</Text>
       </TouchableOpacity>
-	  </View>
+	</View>
   );
 };
 

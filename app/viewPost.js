@@ -5,7 +5,7 @@ import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 import { COLORS, icons, images, SIZES } from "../constants";
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn/ScreenHeaderBtn";
 import WorkoutImage from "../components/WorkoutImage/WorkoutImage";
-
+import ExerciseElement from "../components/Workout/ExerciseElement";
 
 const ViewPost = () => {
   const router = useRouter()
@@ -49,22 +49,10 @@ const ViewPost = () => {
             justifyContent: "center",
             alignItems: "center",
             }}>
-          <Text style={styles.exerciseText}>Bench Press - 4x10</Text>
-          <View style={styles.lineStyle} />
-          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
-          <View style={styles.lineStyle} />
-          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
-          <View style={styles.lineStyle} />
-          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
-          <View style={styles.lineStyle} />
-          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
-          <View style={styles.lineStyle} />
-          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
-          <View style={styles.lineStyle} />
-          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
-          <View style={styles.lineStyle} />
-          <Text style={styles.exerciseText}>Push Ups - 3x20</Text>
-          <View style={styles.lineStyle} />
+
+          {post.workout.exercises.map((exercise) => {
+            return (<ExerciseElement key={exercise.id} exercise={exercise} />)
+          })}
         </ScrollView>
       </View>
     </SafeAreaView>

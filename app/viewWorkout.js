@@ -44,7 +44,7 @@ const ViewWorkout = () => {
             }}>
           
           {workout.exercises.map((exercise) => {
-            return (<ExerciseElement exercise={exercise} />)
+            return (<ExerciseElement key={exercise.id} exercise={exercise} />)
           })}
 
         </ScrollView>
